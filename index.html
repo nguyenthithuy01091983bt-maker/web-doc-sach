@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Web Đọc Sách</title>
+<style>
+body{
+    background:#1e2a38;
+    font-family:Arial;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.box{
+    background:#2c3e50;
+    padding:20px;
+    border-radius:15px;
+}
+
+input{
+    width:80%;
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    margin:10px;
+}
+
+button{
+    background:#27ae60;
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:16px;
+}
+
+#content{
+    margin-top:20px;
+    text-align:left;
+}
+</style>
+</head>
+
+<body>
+
+<h2>📚 Web Đọc Sách</h2>
+
+<div class="box">
+<input type="text" id="bookId" placeholder="Nhập ID sách...">
+<br>
+<button onclick="openBook()">Mở Sách</button>
+
+<div id="content"></div>
+</div>
+
+<script>
+var books = {
+    "1": {
+        title: "Sách 1",
+        chapters: {
+            "1": "Đây là nội dung Chương 1 của Sách 1...",
+            "2": "Đây là nội dung Chương 2 của Sách 1...",
+            "3": "Đây là nội dung Chương 3 của Sách 1..."
+        }
+    },
+    "2": {
+        title: "Sách 2",
+        chapters: {
+            "1": "Chương 1 của Sách 2...",
+            "2": "Chương 2 của Sách 2..."
+        }
+    }
+};
+
+function openBook(){
+    var id = document.getElementById("bookId").value;
+    var content = document.getElementById("content");
+
+    if(books[id]){
+        var book = books[id];
+        var html = "<h3>" + book.title + "</h3>";
+        html += "<p><b>Danh sách chương:</b></p>";
+
+        for(var chap in book.chapters){
+            html += "<button onclick='openChapter(\""+id+"\",\""+chap+"\")'>Chương "+chap+"</button> ";
+        }
+
+        html += "<div id='chapterContent' style='margin-top:15px;'></div>";
+        content.innerHTML = html;
+    } else {
+        content.innerHTML = "<p>Không tìm thấy sách!</p>";
+    }
+}
+
+function openChapter(bookId, chapId){
+    var text = books[bookId].chapters[chapId];
+    document.getElementById("chapterContent").innerHTML =
+        "<h4>Chương "+chapId+"</h4><p>"+text+"</p>";
+}
+</script>                                </body>
+</html>
